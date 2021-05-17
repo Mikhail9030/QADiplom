@@ -36,26 +36,26 @@ public class PaymentPage {
     }
 
     public void waitIfSuccessMessage() {
-        successNotification.waitUntil(Condition.visible, 15000);
+        successNotification.waitUntil(Condition.visible, 4000);
     }
 
     public void waitIfFailMessage() {
-        failNotification.waitUntil(Condition.visible, 15000);
+        failNotification.waitUntil(Condition.visible, 4000);
     }
 
     public void waitIfWrongFormatMessage() {
-        wrongFormatMessage.waitUntil(Condition.visible, 10000);
+        wrongFormatMessage.waitUntil(Condition.visible, 4000);
     }
 
     public void waitIfWrongTermMessage() {
-        wrongTermMessage.waitUntil(Condition.visible, 10000);
+        wrongTermMessage.waitUntil(Condition.visible, 4000);
     }
 
     public void waitIfCardExpiredMessage() {
-        cardExpiredMessage.waitUntil(Condition.visible, 10000);
+        cardExpiredMessage.waitUntil(Condition.visible, 4000);
     }
 
     public void waitIfShouldFillFieldMessage() {
-        fieldFillRequiredMessage.waitUntil(Condition.visible, 10000);
+        fieldFillRequiredMessage.waitUntil(Condition.visible, 4000);
     }
 }
