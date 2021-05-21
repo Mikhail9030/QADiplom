@@ -65,24 +65,24 @@ public class SQLHelper {
         return null;
     }
 
-    public static String getPaymentId() {
+    public static PaymentEntity getPaymentId() {
         val extractTransactionId = "SELECT * FROM payment_entity";
         val runner = new QueryRunner();
         try (val conn = getConnection()) {
             val transactionId = runner.query(conn, extractTransactionId, new BeanHandler<>(PaymentEntity.class));
-            return transactionId.getTransaction_id();
+            return transactionId;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static String getPaymentAmount() {
+    public static PaymentEntity getPaymentAmount() {
         val extractAmount = "SELECT * FROM payment_entity";
         val runner = new QueryRunner();
         try (val conn = getConnection()) {
             val transactionId = runner.query(conn, extractAmount, new BeanHandler<>(PaymentEntity.class));
-            return transactionId.getAmount();
+            return transactionId;
         } catch (SQLException e) {
             e.printStackTrace();
         }
