@@ -41,84 +41,36 @@ public class SQLHelper {
         }
     }
 
-    public static String getStatusForPaymentWithDebitCard() {
+    public static PaymentEntity getStatusForPaymentWithDebitCard() {
         val extractStatus = "SELECT * FROM payment_entity";
         val runner = new QueryRunner();
         try (val conn = getConnection()) {
-            val debitCardStatus = runner.query(conn, extractStatus, new BeanHandler<>(PaymentEntity.class));
-            return debitCardStatus.getStatus();
+            val paymentRecord = runner.query(conn, extractStatus, new BeanHandler<>(PaymentEntity.class));
+            return paymentRecord;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static String getStatusForPaymentWithCreditCard() {
+    public static CreditRequestEntity getStatusForPaymentWithCreditCard() {
         val extractStatus = "SELECT * FROM credit_request_entity";
         val runner = new QueryRunner();
         try (val conn = getConnection()) {
             val creditCardStatus = runner.query(conn, extractStatus, new BeanHandler<>(CreditRequestEntity.class));
-            return creditCardStatus.getStatus();
+            return creditCardStatus;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static PaymentEntity getPaymentId() {
-        val extractTransactionId = "SELECT * FROM payment_entity";
-        val runner = new QueryRunner();
-        try (val conn = getConnection()) {
-            val transactionId = runner.query(conn, extractTransactionId, new BeanHandler<>(PaymentEntity.class));
-            return transactionId;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static PaymentEntity getPaymentAmount() {
-        val extractAmount = "SELECT * FROM payment_entity";
-        val runner = new QueryRunner();
-        try (val conn = getConnection()) {
-            val transactionId = runner.query(conn, extractAmount, new BeanHandler<>(PaymentEntity.class));
-            return transactionId;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static String getCreditId() {
-        val extractBankId = "SELECT * FROM credit_request_entity";
-        val runner = new QueryRunner();
-        try (val conn = getConnection()) {
-            val bankId = runner.query(conn, extractBankId, new BeanHandler<>(CreditRequestEntity.class));
-            return bankId.getBank_id();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static String getOrderPaymentId() {
+    public static OrderEntity getOrderPaymentId() {
         val extractPaymentId = "SELECT * FROM order_entity";
         val runner = new QueryRunner();
         try (val conn = getConnection()) {
-            val paymentId = runner.query(conn, extractPaymentId, new BeanHandler<>(OrderEntity.class));
-            return paymentId.getPayment_id();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static String getOrderCreditId() {
-        val extractCreditId = "SELECT * FROM order_entity";
-        val runner = new QueryRunner();
-        try (val conn = getConnection()) {
-            val paymentId = runner.query(conn, extractCreditId, new BeanHandler<>(OrderEntity.class));
-            return paymentId.getPayment_id();
+            val orderRecord = runner.query(conn, extractPaymentId, new BeanHandler<>(OrderEntity.class));
+            return orderRecord;
         } catch (SQLException e) {
             e.printStackTrace();
         }

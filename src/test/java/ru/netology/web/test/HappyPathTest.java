@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.page.MainPage;
 import ru.netology.web.page.PaymentPage;
+import ru.netology.web.sqlentities.PaymentEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -51,7 +52,7 @@ public class HappyPathTest extends TestBase {
             val expectedStatus = "DECLINED";
             val actualStatus = getStatusForPaymentWithDebitCard();
             assertEquals(expectedStatus, actualStatus);
-            val expectedId = getPaymentId();
+            val expectedId = PaymentEntity();
             assertNotNull(expectedId);
             val actualId = getOrderPaymentId();
             assertNotNull(actualId);

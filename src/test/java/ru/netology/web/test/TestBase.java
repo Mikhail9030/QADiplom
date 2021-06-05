@@ -20,17 +20,14 @@ public class TestBase {
     }
 
     @AfterAll
-    static void tearDown() {
-        SelenideLogger.removeListener("allure");
+    static void tearDown() {SelenideLogger.removeListener("allure");
     }
 
     @BeforeEach
-    void setUpUrl() {
-        open(System.getProperty("sut.url"));
+    void setUpUrl() {open(System.getProperty("sut.url"));
     }
 
     @AfterEach
-    void cleanDb() {
-        SQLHelper.cleanDb();
+    void cleanDb() {SQLHelper.cleanDb();
     }
 }

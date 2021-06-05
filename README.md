@@ -25,6 +25,6 @@
 **gradlew clean test -Durl=jdbc:mysql://localhost:3306/app**
 * Для PostgreSQL: **gradlew clean test -Durl=jdbc:postgresql://localhost:5433/app**
 4. Сгенерировать отчеты: 
-* gradlew allureReport
-* gradlew allureServe
+* **gradlew allureReport**
+* **gradlew allureServe**
 5. Для завершения работы allureServe выполнить команду: **Ctrl + С далее Y**
