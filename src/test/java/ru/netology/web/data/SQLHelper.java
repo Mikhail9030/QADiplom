@@ -41,7 +41,7 @@ public class SQLHelper {
         }
     }
 
-    public static PaymentEntity getStatusForPaymentWithDebitCard() {
+    public static PaymentEntity getPaymentEntityRecord() {
         val extractStatus = "SELECT * FROM payment_entity";
         val runner = new QueryRunner();
         try (val conn = getConnection()) {
@@ -53,7 +53,7 @@ public class SQLHelper {
         return null;
     }
 
-    public static CreditRequestEntity getStatusForPaymentWithCreditCard() {
+    public static CreditRequestEntity getCreditRequestEntityRecord() {
         val extractStatus = "SELECT * FROM credit_request_entity";
         val runner = new QueryRunner();
         try (val conn = getConnection()) {
@@ -65,7 +65,7 @@ public class SQLHelper {
         return null;
     }
 
-    public static OrderEntity getOrderPaymentId() {
+    public static OrderEntity getOrderPaymentLastRecord() {
         val extractPaymentId = "SELECT * FROM order_entity";
         val runner = new QueryRunner();
         try (val conn = getConnection()) {
