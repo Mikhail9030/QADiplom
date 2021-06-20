@@ -4,16 +4,15 @@ import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import ru.netology.web.data.DataHelper;
 import ru.netology.web.page.MainPage;
 import ru.netology.web.page.PaymentPage;
-import ru.netology.web.sqlentities.PaymentEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static ru.netology.web.data.DataHelper.getValidApprovedCardData;
 import static ru.netology.web.data.DataHelper.getValidDeclinedCardData;
 import static ru.netology.web.data.SQLHelper.*;
+
 
 public class HappyPathTest extends TestBase {
     MainPage mainPage = new MainPage();
@@ -29,35 +28,37 @@ public class HappyPathTest extends TestBase {
 
         @Test
         void shouldDoPaymentWhenValidApprovedCard() {
-            var paymentEntity = getPaymentEntityRecord();
-            var orderEntity = getOrderPaymentLastRecord();
+            val info = getValidApprovedCardData();
             paymentPage.fillForm(info);
-            paymentPage.waitIfSuccessMessage();
+            paymentPage.waitIfFailMessage();
             val expectedAmount = "4500000";
+            val expectedStatus = "APPROVED";
+            var orderEntity = getOrderPaymentLastRecord();
+            var paymentEntity = getPaymentEntityRecord();
             var amount = paymentEntity.getAmount();
             assertEquals(expectedAmount,amount);
-            val expectedStatus = "APPROVED";
             var status = paymentEntity.getStatus();
             assertEquals(expectedStatus,status);
             var transactionId = paymentEntity.getTransaction_id();
             assertNotNull(transactionId);
-            var orderPaymentId = orderEntity.getOrderPayment_Id();
+            var orderPaymentId = orderEntity.getPayment_id();
             assertNotNull(orderPaymentId);
             assertEquals(transactionId,orderPaymentId);
         }
 
         @Test
         void shouldNotDoPaymentWhenValidDeclinedCard() {
-            var paymentEntity = getPaymentEntityRecord();
-            var orderEntity = getOrderPaymentLastRecord();
+            val info = getValidDeclinedCardData();
             paymentPage.fillForm(info);
             paymentPage.waitIfFailMessage();
             val expectedStatus = "DECLINED";
-            var StatusForPaymentWithDebitCard = paymentEntity.getStatusForPaymentWithDebitCard();
-            assertEquals(expectedStatus, StatusForPaymentWithDebitCard);
-            val expectedId = getPaymentId();
+            var orderEntity = getOrderPaymentLastRecord();
+            var paymentEntity = getPaymentEntityRecord();
+            var actualStatus = paymentEntity.getStatus();
+            assertEquals(expectedStatus, actualStatus);
+            var expectedId = orderEntity.getId();
             assertNotNull(expectedId);
-            val actualId = getOrderPaymentId();
+            var actualId = orderEntity.getId();
             assertNotNull(actualId);
             assertEquals(expectedId, actualId);
         }
@@ -77,11 +78,12 @@ public class HappyPathTest extends TestBase {
             paymentPage.fillForm(info);
             paymentPage.waitIfSuccessMessage();
             val expectedStatus = "APPROVED";
-            val actualStatus = getStatusForPaymentWithCreditCard();
+            var creditRequestEntity = getCreditRequestEntityRecord();
+            var actualStatus = creditRequestEntity.getCreated();
             assertEquals(expectedStatus, actualStatus);
-            val expectedId = getCreditId();
+            var expectedId = creditRequestEntity.getId();
             assertNotNull(expectedId);
-            val actualId = getOrderCreditId();
+            var actualId = creditRequestEntity.getBank_id();
             assertNotNull(actualId);
             assertEquals(expectedId, actualId);
         }
@@ -92,11 +94,12 @@ public class HappyPathTest extends TestBase {
             paymentPage.fillForm(info);
             paymentPage.waitIfFailMessage();
             val expectedStatus = "DECLINED";
-            val actualStatus = getStatusForPaymentWithCreditCard();
+            var creditRequestEntity = getCreditRequestEntityRecord();
+            var actualStatus = creditRequestEntity.getStatus();
             assertEquals(expectedStatus, actualStatus);
-            val expectedId = getCreditId();
+            var expectedId = creditRequestEntity.getId();
             assertNotNull(expectedId);
-            val actualId = getOrderCreditId();
+            var actualId = creditRequestEntity.getId();
             assertNotNull(actualId);
             assertEquals(expectedId, actualId);
         }
